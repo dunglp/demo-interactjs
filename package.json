@@ -1,12 +1,12 @@
 {
   "name": "interactjs-demo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Demo app using InteractJS",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Bi",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^4.3.1",
