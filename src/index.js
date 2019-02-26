@@ -1,4 +1,5 @@
-var dropZone = document.getElementById('drop-zone');
+var dropZone = document.getElementById('drop-zone'),
+    zi = 0;
 
 // Element Template Draggable 
 interact('.draggable')  
@@ -6,6 +7,7 @@ interact('.draggable')
         { 
             manualStart: true, // manualStart since we will move the cloned template element
             onmove: dragMoveHandler,
+            onend: dragEndHandler
         })
         .on('move', function (event) {
             var interaction = event.interaction;
@@ -25,8 +27,20 @@ interact('.draggable')
                                     event.interactable,
                                     clone);
             }   
-    }); 
+        }); 
 
+function dragEndHandler(event) {
+    var targetRect = interact.getElementRect(event.target);
+    var dzRect = interact.getElementRect(dropZone);
+    
+
+    if(targetRect.left >= dzRect.left && targetRect.top >= dzRect.top && targetRect.bottom <= dzRect.bottom && targetRect.right <= dzRect.right){
+        return;
+    }
+    if(event.target.parentNode)
+        event.target.parentNode.removeChild(event.target);
+    console.log('Wrong Drop Position');
+}
 // Content Element Draggable 
 interact('.inside-draggable')  
     .draggable({
@@ -38,6 +52,7 @@ interact('.inside-draggable')
         },
         autoScroll: true,
         onmove: dragMoveHandler,
+        onend: insideDragEndHandler
     })
     .resizable({
         edges: { 
@@ -84,6 +99,12 @@ function dragMoveHandler (event) {
 
     // update zIndex to make this always on top
     target.style.zIndex = 9999;
+}
+
+function insideDragEndHandler(event) {
+    var target = event.target;
+    zi++;
+    target.style.zIndex = zi;
 }
 
 // Handling Content Element Resize
@@ -147,7 +168,8 @@ interact('.dropzone')
             clone.style.top = rect.top;
             clone.style.left = rect.left;
             clone.style.width = rect.width+"px";
-            clone.style.zIndex = 0;
+            zi++;
+            clone.style.zIndex = zi;
             clone.style.webkitTransform = clone.style.transform = 'translate(' + left + 'px,' + top + 'px)';
             clone.setAttribute('data-x', left);
             clone.setAttribute('data-y', top);
@@ -196,9 +218,9 @@ interact('.dropzone')
 
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
-        target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
+        $('#dz-info').text(Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height));
     }).on('resizeend', function (event) {
-        event.target.textContent = '';
+        $('#dz-info').text('You can drop the element here ...');
     });
 
 // Element Properties Modal Handler
