@@ -38,6 +38,25 @@ interact('.inside-draggable')
         },
         autoScroll: true,
         onmove: dragMoveHandler,
+    })
+    .resizable({
+        edges: { 
+            left: true, 
+            right: true, 
+            bottom: true, 
+            top: true 
+        },
+
+        // keep the edges inside the parent
+        restrictEdges: {
+            outer: 'parent',
+            endOnly: true,
+        },
+        restrictSize: {
+            min: { width: 252, height: 80 },
+        },
+        inertia: true,
+        onmove: onInsideDraggableResizeMoveHandler
     });
 
 // Handling Drag Moving 
@@ -55,6 +74,21 @@ function dragMoveHandler (event) {
 
     // update zIndex to make this always on top
     target.style.zIndex = 9999;
+}
+
+// Handling Content Element Resize
+function onInsideDraggableResizeMoveHandler(event) {
+    var target = event.target,
+        x = (parseFloat(target.getAttribute('data-x')) || 0),
+        y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+        x += event.deltaRect.left;
+        y += event.deltaRect.top;
+        target.style.width  = event.rect.width + 'px';
+        target.style.height = event.rect.height + 'px';
+        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
 }
 
 // DROP ZONE
