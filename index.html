@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Demo InteractJS</title>
+    <script src="./node_modules/interactjs/dist/interact.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <!-- START Top Navigation Bar -->
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">X Team</a>
+    </nav>
+    <!-- END Top Navigation Bar -->
+
+    <!-- START MAIN CONTENT -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- START Element List -->
+            <div class="col-md-2 d-none d-md-block bg-light sidebar">
+                <ul class="nav flex-column">
+                    <li>
+                        <div class="card draggable" data-title="Card 1" data-content="Card Content 1...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card 1</h5>
+                                <p class="card-text">Card Content 1...</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card draggable" data-title="Card 2" data-content="Card Content 2...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card 2</h5>
+                                <p class="card-text">Card Content 2...</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card draggable" data-title="Card 3" data-content="Card Content 3...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card 3</h5>
+                                <p class="card-text">Card Content 3...</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card draggable" data-title="Card 4" data-content="Card Content 4...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card 4</h5>
+                                <p class="card-text">Card Content 4...</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card draggable" data-title="Card 5" data-content="Card Content 5...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card 5</h5>
+                                <p class="card-text">Card Content 5...</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card draggable" data-title="Card 6" data-content="Card Content 6...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card 6</h5>
+                                <p class="card-text">Card Content 6...</p>
+                            </div>
+                        </div>
+                        </li>
+                </ul>
+            </div>
+            <!-- END Element List -->
+
+            <!-- START CONTENT -->
+            <div role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Demo InteractJS</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropzone" id="drop-zone">
+                    You can drop the element here ...
+                </div>
+            </div>
+            <!-- END CONTENT -->
+        </div>
+        <!-- START Element Properties Modal -->
+        <div class="modal fade" id="propertiesModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Element Properties</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="el-title">
+                        </div>
+                        <div class="form-group">
+                            <label for="content" class="col-form-label">Content:</label>
+                            <textarea class="form-control" id="el-content"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btn-save">Save changes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Element Properties Modal -->
+        <!-- START Hidden fields to store selected element info -->
+        <input type="hidden" id="data-title" />
+        <input type="hidden" id="data-content" />
+        <!-- END Hidden fields to store selected element info -->
+    </div>
+    <!-- END MAIN CONTENT -->
+
+    <!-- START Bootstrap required JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- END Bootstrap required JS -->
+    <script src="./src/index.js"></script>
+</body>
+</html>
