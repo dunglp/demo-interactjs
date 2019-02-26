@@ -251,3 +251,19 @@ $('#btn-save').on('click', function(e){
     // Close Modal
     modal.modal('toggle');
 });
+
+$('#btnExport').on('click', function(e) {
+    print();
+});
+function print(quality = 2) {
+    const filename  = 'interactjs-demo.pdf';
+    var dzRect = interact.getElementRect(dropZone);
+    console.log(dzRect);
+    html2canvas(document.querySelector('#drop-zone'), 
+                            {scale: quality}
+                    ).then(canvas => {
+        let pdf = new jsPDF('l', 'mm', 'a5');
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 5, 5, 200, 135);
+        pdf.save(filename);
+    });
+}

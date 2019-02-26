@@ -81,12 +81,11 @@
                     <h1 class="h2">Demo InteractJS</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id="btnExport">Export</button>
                         </div>
                     </div>
                 </div>
                 <div class="dropzone" id="drop-zone">
-                    You can drop the element here ...
                     <div class="dz-info" id="dz-info">
                         You can drop the element here ...
                     </div>
@@ -136,6 +135,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- END Bootstrap required JS -->
+    <script src="./node_modules/jspdf/dist/jspdf.min.js"></script>
+    <script src="./node_modules/html2canvas/dist/html2canvas.min.js"></script>
     <script src="./src/index.js"></script>
 </body>
 </html>
