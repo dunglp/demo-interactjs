@@ -41,3 +41,35 @@ function dragMoveHandler (event) {
     // update zIndex to make this always on top
     target.style.zIndex = 9999;
 }
+
+// DROP ZONE
+interact('.dropzone')
+    .dropzone({  
+        // Require a 100% element overlap for a drop to be possible
+        overlap: 1.00,
+        accept: '.draggable', // only accept this class to be able to dropped on
+        // listen for drop related events:
+        ondropactivate: function (event) {
+            // add active dropzone feedback
+            event.target.classList.add('drop-active');
+        },
+        ondragenter: function (event) {
+            var dropzoneElement = event.target;
+
+            // feedback the possibility of a drop
+            dropzoneElement.classList.add('drop-target');
+        },
+        ondragleave: function (event) {
+            // remove the drop feedback style
+            event.target.classList.remove('drop-target');
+        },
+        ondrop: function (event) {
+            event.relatedTarget.classList.remove("draggable");
+            event.relatedTarget.classList.add("inside-draggable");
+        },
+        ondropdeactivate: function (event) {
+            // remove active dropzone feedback
+            event.target.classList.remove('drop-active');
+            event.target.classList.remove('drop-target');
+        }
+    });
