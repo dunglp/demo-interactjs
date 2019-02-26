@@ -1,3 +1,5 @@
+var dropZone = document.getElementById('drop-zone');
+
 // Element Template Draggable 
 interact('.draggable')  
     .draggable(
@@ -24,6 +26,19 @@ interact('.draggable')
                                     clone);
             }   
     }); 
+
+// Content Element Draggable 
+interact('.inside-draggable')  
+    .draggable({
+        inertia: true,
+        restrict: {
+            restriction: dropZone, // Restrict to drag only inside Content area
+            endOnly: true,
+            elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+        },
+        autoScroll: true,
+        onmove: dragMoveHandler,
+    });
 
 // Handling Drag Moving 
 function dragMoveHandler (event) {
@@ -64,8 +79,39 @@ interact('.dropzone')
             event.target.classList.remove('drop-target');
         },
         ondrop: function (event) {
-            event.relatedTarget.classList.remove("draggable");
-            event.relatedTarget.classList.add("inside-draggable");
+            // Create a clone of dragging element 
+            var clone = event.relatedTarget.cloneNode(true),
+                rect = interact.getElementRect(event.relatedTarget);
+
+            // Remove dragging element from DOM 
+            if(event.relatedTarget.parentNode) {
+                event.relatedTarget.parentNode.removeChild(event.relatedTarget);
+            }
+
+            var dzRect = interact.getElementRect(dropZone),
+                // Calculate Clone element position inside dropzone 
+                left = rect.left - (dzRect.left + 20),
+                top = rect.top - (dzRect.top + 40);
+
+            // Disable template element draggable 
+            clone.classList.remove("draggable");
+            // Enable Content Element draggable
+            clone.classList.add("inside-draggable");
+
+            // Update clone element : 
+            clone.style.position = 'absolute';
+            clone.style.top = rect.top;
+            clone.style.left = rect.left;
+            clone.style.width = rect.width+"px";
+            clone.style.zIndex = 0;
+            clone.style.webkitTransform = clone.style.transform = 'translate(' + left + 'px,' + top + 'px)';
+            clone.setAttribute('data-x', left);
+            clone.setAttribute('data-y', top);
+
+            // Add clone element to dropzone 
+            if(event.target) {
+                event.target.appendChild(clone);
+            }
         },
         ondropdeactivate: function (event) {
             // remove active dropzone feedback
