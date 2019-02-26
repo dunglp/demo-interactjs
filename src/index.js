@@ -57,6 +57,16 @@ interact('.inside-draggable')
         },
         inertia: true,
         onmove: onInsideDraggableResizeMoveHandler
+    })
+    .on('doubletap', function (event) {
+        selectedEl = event.currentTarget;
+        var attributes = selectedEl.attributes;
+        $('#data-title').val(attributes["data-title"].value);
+        $('#data-content').val(attributes["data-content"].value);
+
+        $('#propertiesModel').modal({
+            backdrop: 'static'
+        });
     });
 
 // Handling Drag Moving 
@@ -190,3 +200,32 @@ interact('.dropzone')
     }).on('resizeend', function (event) {
         event.target.textContent = '';
     });
+
+// Element Properties Modal Handler
+$('#propertiesModel').on('show.bs.modal', function (event) {
+    var modal = $(this),
+        title = $('#data-title').val(), // Get Selected Element Title from hidden field
+        content = $('#data-content').val(); // Get Selected Element Content from hidden field
+
+    // Set Selected Element Properties to Modal fields
+    modal.find('#el-title').val(title);
+    modal.find('#el-content').val(content);
+})
+
+$('#btn-save').on('click', function(e){
+    var modal = $('#propertiesModel'),
+        // Get Updated Element Properties from Modal fields
+        title = modal.find('#el-title').val(), 
+        content = modal.find('#el-content').val();
+
+    // Set Updated Element Properties
+    $(selectedEl).attr("data-title", title);
+    $(selectedEl).attr("data-content", content);
+    if($(selectedEl).children().children().length > 1) {
+        $(selectedEl).children().children()[0].innerText = title;
+        $(selectedEl).children().children()[1].innerText = content;
+    }
+
+    // Close Modal
+    modal.modal('toggle');
+});
